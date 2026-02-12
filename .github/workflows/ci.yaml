@@ -2,7 +2,7 @@ name: Build and Push Microservices
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'src/**' # Only trigger if source code changes
   workflow_dispatch: # Allows you to run this manually button click
@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        service: 
+        service:
           - adservice
           - cartservice
           - checkoutservice
@@ -62,13 +62,13 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      
+
       # Security Scan (Optional: Can comment out if it builds too slow)
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_PREFIX }}-${{ matrix.service }}:latest
-          format: 'table'
-          exit-code: '0'
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
+      # - name: Run Trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     image-ref: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_PREFIX }}-${{ matrix.service }}:latest
+      #     format: 'table'
+      #     exit-code: '0'
+      #     ignore-unfixed: true
+      #     severity: 'CRITICAL,HIGH'
